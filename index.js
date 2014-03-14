@@ -1,5 +1,5 @@
 var fs = require('fs');
-var ReadStream = require('./lib/safestream');
+var ReadStream = require('tty').ReadStream;
 
 var _fs = process.binding('fs');
 var _constants = process.binding('constants');
@@ -31,13 +31,9 @@ function openTTY() {
     tty.setRawMode(true);
 
     if (process.stdin.isTTY) {
-        rs = process.stdin;
+        return rs = process.stdin;
     } else {
-        rs = new ReadStream(fd);
-    }
-
-    rs.setRawMode = function (mode) {
-        tty.setRawMode(!!mode);
+        return rs || (rs = new ReadStream(fd));
     }
 
     return rs;
