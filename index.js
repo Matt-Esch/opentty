@@ -1,3 +1,4 @@
+var fs = require('fs');
 var ReadStream = require('tty').ReadStream;
 
 var _fs = process.binding('fs');
