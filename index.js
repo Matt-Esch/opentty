@@ -12,8 +12,7 @@ var rs = null;
 function openTTY() {
     var fd;
 
-    if (rs) {
-        rs.setRawMode(true);
+    if (rs && rs.isTTY) {
         return rs;
     }
 
