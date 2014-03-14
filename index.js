@@ -36,8 +36,8 @@ function openTTY() {
         rs = new ReadStream(fd);
     }
 
-    rs.setRawMode = function () {
-        tty.setRawMode(false);
+    rs.setRawMode = function (mode) {
+        tty.setRawMode(!!mode);
     }
 
     return rs;
