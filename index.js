@@ -7,8 +7,15 @@ var _TTY = process.binding('tty_wrap').TTY;
 
 module.exports = openTTY;
 
+var rs = null;
+
 function openTTY() {
     var fd;
+
+    if (rs) {
+        rs.setRawMode(true);
+        return rs;
+    }
 
     if (process.platform === 'win32') {
         fd = _fs.open('CONIN$', _constants.O_RDWR, 438);
@@ -24,8 +31,8 @@ function openTTY() {
     tty.setRawMode(true);
 
     if (process.stdin.isTTY) {
-        return process.stdin;
+        return rs = process.stdin;
     } else {
-        return new ReadStream(fd);
+        return rs || (rs = new ReadStream(fd));
     }
 }
