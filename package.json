@@ -1,6 +1,6 @@
 {
   "name": "opentty",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Get TTY read access",
   "keywords": [],
   "author": "Matt Esch <matt@mattesch.info>",
