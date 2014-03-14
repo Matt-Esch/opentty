@@ -1,3 +1,5 @@
+var ReadStream = require('tty').ReadStream;
+
 var _fs = process.binding('fs');
 var _constants = process.binding('constants');
 var _TTY = process.binding('tty_wrap').TTY;
