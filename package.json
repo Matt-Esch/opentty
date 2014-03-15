@@ -1,6 +1,6 @@
 {
   "name": "opentty",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Get TTY read access",
   "keywords": [],
   "author": "Matt Esch <matt@mattesch.info>",
@@ -16,7 +16,9 @@
     "url": "https://github.com/Matt-Esch/opentty/issues",
     "email": "matt@mattesch.info"
   },
-  "dependencies": {},
+  "dependencies": {
+    "process": "~0.6.0"
+  },
   "devDependencies": {
     "tape": "~1.0.2"
   },

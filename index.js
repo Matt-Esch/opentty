@@ -1,4 +1,5 @@
 var fs = require('fs');
+var process = require('process');
 var ReadStream = require('tty').ReadStream;
 
 var _fs = process.binding('fs');
@@ -30,9 +31,9 @@ function openTTY() {
     tty.setRawMode(true);
 
     if (process.stdin.isTTY) {
-        return rs = process.stdin;
+        rs = process.stdin;
     } else {
-        return rs || (rs = new ReadStream(fd));
+        rs = new ReadStream(fd);
     }
 
     return rs;
