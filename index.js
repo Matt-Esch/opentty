@@ -23,10 +23,6 @@ function openTTY() {
         fd = fs.openSync('/dev/tty', 'r');
     }
 
-    if (!fd) {
-        throw new Error('Cannot access console input buffer');
-    }
-
     var tty = new _TTY(fd, true);
     tty.setRawMode(true);
 
