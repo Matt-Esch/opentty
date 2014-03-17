@@ -32,5 +32,6 @@ function openTTY() {
         rs = new ReadStream(fd);
     }
 
+    rs.resume();
     return rs;
 }
