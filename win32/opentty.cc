@@ -6,7 +6,7 @@ using namespace v8;
 
 Handle<Value> console(const Arguments& args) {
   HandleScope scope;
-  HANDLE fd = HANDLE hIn = CreateFile(
+  HANDLE fd = CreateFile(
     "CONIN$",
     GENERIC_READ | GENERIC_WRITE,
     TRUE,
@@ -14,7 +14,8 @@ Handle<Value> console(const Arguments& args) {
     OPEN_EXISTING,
     0,
     0);
-  return scope.Close(Number::New(fd));
+  SetConsoleMode(fd, ENABLE_WINDOW_INPUT);
+  return scope.Close(Integer::New((int32_t)fd));
 }
 
 void init(Handle<Object> exports) {
@@ -22,4 +23,4 @@ void init(Handle<Object> exports) {
       FunctionTemplate::New(console)->GetFunction());
 }
 
-NODE_MODULE(hello, init)
+NODE_MODULE(opentty, init)

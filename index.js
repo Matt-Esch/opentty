@@ -10,21 +10,23 @@ module.exports = openTTY;
 
 var rs = null;
 
-function openTTY() {
-    var fd;
+var rawConsole_native = null
+var rawConsole
 
+
+if (process.platform === 'win32') {
+    rawConsole_native = require('./bin/opentty.node').console;
+    rawConsole = rawConsole_win32;
+} else {
+    rawConsole = rawConsole_unix;
+}
+
+function openTTY() {
     if (rs && rs.isTTY) {
         return rs;
     }
 
-    if (process.platform === 'win32') {
-        fd = _fs.open('CONIN$', _constants.O_RDWR, 438);
-    } else {
-        fd = fs.openSync('/dev/tty', 'r');
-    }
-
-    var tty = new _TTY(fd, true);
-    tty.setRawMode(true);
+    var fd = rawConsole();
 
     if (process.stdin.isTTY) {
         rs = process.stdin;
@@ -32,6 +34,26 @@ function openTTY() {
         rs = new ReadStream(fd);
     }
 
-    rs.resume();
     return rs;
+}
+
+function rawConsole_win32() {
+    var fd
+
+    try {
+        fd = _fs.open('CONIN$', _constants.O_RDWR, 438);
+        var tty = new _TTY(fd, true);
+        tty.setRawMode(true);
+    } catch (e) {
+        fd = rawConsole_native();
+    }
+
+    return fd;
+}
+
+function rawConsole_unix() {
+    var fd = fs.openSync('/dev/tty', 'r');
+    var tty = new _TTY(fd, true);
+    tty.setRawMode(true);
+    return fd;
 }
